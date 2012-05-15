@@ -58,7 +58,7 @@ module Guard
       elsif path.match(/^data_bags\/(.*)\/(.*)$/)
         data_bag = $1
         item = $2
-        upload_databag(data_bag, item)
+        upload_databag(data_bag, path)
       elsif path.match(/^(environments\/.*\.rb)$/)
         upload_environment($1)
       elsif path.match(/^(roles\/.*.rb)$/)
@@ -90,9 +90,9 @@ module Guard
     def upload_databag(data_bag, item)
       ::Guard::Notifier.notify("Uploading databag #{data_bag}")
       if system("knife data bag from file #{data_bag} #{item} #{knife_options}")
-        ::Guard::Notifier.notify("Data bag #{data_bag} upload")
+        ::Guard::Notifier.notify("Data bag #{data_bag}::#{item} uploaded")
       else
-        ::Guard::Notifier.notify("Data bag #{data_bag} failed to upload")
+        ::Guard::Notifier.notify("Data bag #{data_bag}::#{item} failed to upload")
       end
     end
 
