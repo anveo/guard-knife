@@ -61,7 +61,7 @@ module Guard
         data_bag = $1
         item = $2
         upload_databag(data_bag, item)
-      elsif path.match(/^(environments\/.*\.rb)$/)
+      elsif path.match(/^(environments\/.*)$/)
         upload_environment($1)
       elsif path.match(/^(roles\/.*.rb)$/)
         upload_role($1)
@@ -82,7 +82,7 @@ module Guard
 
     def upload_cookbook(cookbook)
       ::Guard::Notifier.notify("Uploading cookbook #{cookbook}")
-      if system("knife cookbook upload #{cookbook} #{knife_options}")
+      if system("bundle exec knife cookbook upload #{cookbook} #{knife_options}")
         ::Guard::Notifier.notify("Cookbook #{cookbook} uploaded")
       else
         ::Guard::Notifier.notify("Cookbook #{cookbook} failed to upload")
