@@ -55,6 +55,8 @@ module Guard
     def upload(path)
       if path.match(/^cookbooks\/([^\/]*)\//)
         upload_cookbook($1)
+      elsif path.match(/^site-cookbooks\/([^\/]*)\//)
+        upload_cookbook($1)
       elsif path.match(/^data_bags\/(.*)\/(.*)$/)
         data_bag = $1
         item = $2
